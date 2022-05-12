@@ -8,6 +8,11 @@ headers = {
 }
 
 
+URL_list =[("https://exact-sciences.tau.ac.il/yedion/shar_ruach", "node-12227"), \
+           ("https://exact-sciences.tau.ac.il/yedion/computer_courses", "node-12150"), \
+           ("https://exact-sciences.tau.ac.il/yedion/math_single_major", "node-12020")]
+
+
 def convert_str(string):
     li = list(string.split(" "))
     return li
@@ -33,39 +38,35 @@ def createURL(course_id):
     return "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course="+course_id+"01&year=2021"
 
 
-def getIDS():
-    req = requests.get("https://exact-sciences.tau.ac.il/yedion/shar_ruach", headers=headers)
+def getIDS(site_inst):
+    req = requests.get(site_inst[0], headers=headers)
 
     soup = BeautifulSoup(req.content, "html.parser")
 
-    res = soup.find("div", {"id": "node-12227"})
+    res = soup.find("div", {"id": site_inst[1]})
 
     ids_dirty = cleanhtml(str(res))
     dirty_list = convert_str(ids_dirty)
-    print(dirty_list)
+
     list_result = []
 
-    for id_str in ids_dirty:
+    for id_str in dirty_list:
+        tmp = ""
+        id_val = 0
         for char in id_str:
-            if char :
-            list_result.append(id_str)
-    return list_result
+            if 57 >= ord(char) >= 48:
+                tmp += char
+        if tmp != '' and int(tmp) > 10000:
+            list_result.append(int(tmp))
+    return list_result[2:]
 
 
-print(getIDS())
+def getAllIds(Ulist):
+    all_ids = []
+    for URL in Ulist:
+        all_ids.append(getIDS(URL))
+    return all_ids
 
 
-def getName(soup_res):
-    pass
+print(getAllIds(URL_list))
 
-
-# for tag in soup.findAll('p'):
-#     print(tag.get_text())
-
-
-#cleantext = BeautifulSoup(res, "lxml").text
-
-
-
-
-# print(cleanhtml(table_res))
