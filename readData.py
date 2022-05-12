@@ -8,6 +8,11 @@ headers = {
 }
 
 
+URL_list =[("https://exact-sciences.tau.ac.il/yedion/shar_ruach", "node-12227"), \
+           ("https://exact-sciences.tau.ac.il/yedion/computer_courses", "node-12150"), \
+           ("https://exact-sciences.tau.ac.il/yedion/math_single_major", "node-12020")]
+
+
 def convert_str(string):
     li = list(string.split(" "))
     return li
