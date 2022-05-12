@@ -44,6 +44,6 @@ def get_course_data(dic):
     return dic
 
 get_course_name(dic_course_data)
-get_proff_name(dic_course_data)
+# get_proff_name(dic_course_data)
 print(get_course_data(dic_course_data))
 # print(dic_course_data)
