@@ -35,7 +35,14 @@ def cleanhtml(text):
 
 
 def createURL(course_id):
-    return "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course="+course_id+"01&year=2021"
+
+    # if len > standard
+    course_s = "0"+str(course_id)+"01"
+    if len(course_s) == 10:
+        return "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course="\
+            + course_s + "&year=2021"
+    else:
+        return "1"
 
 
 def getIDS(site_inst):
@@ -47,7 +54,6 @@ def getIDS(site_inst):
 
     ids_dirty = cleanhtml(str(res))
     dirty_list = convert_str(ids_dirty)
-
     list_result = []
 
     for id_str in dirty_list:
@@ -57,6 +63,10 @@ def getIDS(site_inst):
             if 57 >= ord(char) >= 48:
                 tmp += char
         if tmp != '' and int(tmp) > 10000:
+            if len(tmp) > 8:
+                tmp = tmp[2:]
+            if len(tmp) != 8:
+                continue
             list_result.append(int(tmp))
     return list_result[2:]
 
@@ -64,9 +74,19 @@ def getIDS(site_inst):
 def getAllIds(Ulist):
     all_ids = []
     for URL in Ulist:
-        all_ids.append(getIDS(URL))
+        if URL != "1":
+            all_ids.append(getIDS(URL))
     return all_ids
 
 
-print(getAllIds(URL_list))
+def main():
+    g_list = getAllIds(URL_list)
 
+    for i in range(len(g_list)):
+        for j in range(len(g_list[i])):
+            print(createURL(g_list[i][j]))
+    #     req = requests.get(createURL(g_list[0][i]), headers=headers)
+    #
+    #     soup = BeautifulSoup(req.content, "html.parser")
+    #
+    #     print(soup.prettify())
