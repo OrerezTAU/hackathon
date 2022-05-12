@@ -8,35 +8,16 @@ headers = {
 }
 
 
+def convert_str(string):
+    li = list(string.split(" "))
+    return li
 
-table_res = res.find("table")
-res2 = soup.find('p').get_text()
-
-
-
-def createURL(course_id):
-    return "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course="+course_id+"01&year=2021"
-
-def getIDS(soup_res):
-    req = requests.get("https://exact-sciences.tau.ac.il/yedion/shar_ruach", headers=headers)
-
-    soup = BeautifulSoup(req.content, "html.parser")
-
-    res = soup.find("div", {"id": "node-12227"})
-
-def getName(soup_res):
-
-# for tag in soup.findAll('p'):
-#     print(tag.get_text())
-
-
-#cleantext = BeautifulSoup(res, "lxml").text
 
 def cleanhtml(text):
     new_str = ""
     flag = False
-    for char in str(res):
-        if char == '<':
+    for char in text:
+        if char == '<' or char == '\n':
             flag = True
             continue
         if char == '>':
@@ -48,4 +29,43 @@ def cleanhtml(text):
     return new_str
 
 
-print(cleanhtml(table_res))
+def createURL(course_id):
+    return "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course="+course_id+"01&year=2021"
+
+
+def getIDS():
+    req = requests.get("https://exact-sciences.tau.ac.il/yedion/shar_ruach", headers=headers)
+
+    soup = BeautifulSoup(req.content, "html.parser")
+
+    res = soup.find("div", {"id": "node-12227"})
+
+    ids_dirty = cleanhtml(str(res))
+    dirty_list = convert_str(ids_dirty)
+    print(dirty_list)
+    list_result = []
+
+    for id_str in ids_dirty:
+        for char in id_str:
+            if char :
+            list_result.append(id_str)
+    return list_result
+
+
+print(getIDS())
+
+
+def getName(soup_res):
+    pass
+
+
+# for tag in soup.findAll('p'):
+#     print(tag.get_text())
+
+
+#cleantext = BeautifulSoup(res, "lxml").text
+
+
+
+
+# print(cleanhtml(table_res))
