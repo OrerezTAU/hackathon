@@ -3,6 +3,10 @@ from monday import MondayClient
 import requests
 from bs4 import BeautifulSoup
 import re
+
+import getDataForCourse
+import getDataForCourse
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
 }
@@ -19,6 +23,7 @@ def convert_str(string):
 
 
 def cleanhtml(text):
+    text = str(text)
     new_str = ""
     flag = False
     for char in text:
@@ -74,17 +79,29 @@ def getIDS(site_inst):
 def getAllIds(Ulist):
     all_ids = []
     for URL in Ulist:
-        if URL != "1":
+        if URL != '1':
             all_ids.append(getIDS(URL))
     return all_ids
 
 
 def main():
+    dic_course_data={}
+
     g_list = getAllIds(URL_list)
 
     for i in range(len(g_list)):
         for j in range(len(g_list[i])):
-            print(createURL(g_list[i][j]))
+            url_of_course = (createURL(g_list[i][j]))
+            if url_of_course != '1':
+                print(url_of_course)
+                try:
+                    getDataForCourse.get_course_name(dic_course_data, url_of_course)
+                    getDataForCourse.get_course_data(dic_course_data, url_of_course)
+                    getDataForCourse.get_proff_name(dic_course_data, url_of_course)
+                except:
+                    print(url_of_course )
+                    continue
+    print(dic_course_data)
     #     req = requests.get(createURL(g_list[0][i]), headers=headers)
     #
     #     soup = BeautifulSoup(req.content, "html.parser")
