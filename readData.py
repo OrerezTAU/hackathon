@@ -34,7 +34,7 @@ def createURL(course_id):
 
 
 def getIDS():
-    req = requests.get("https://exact-sciences.tau.ac.il/yedion/shar_ruach", headers=headers)
+    req = requests.get("https://exact-sciences.tau.ac.il/yedion/shar_ruach", headers=headers, verify=False)
 
     soup = BeautifulSoup(req.content, "html.parser")
 
@@ -42,17 +42,17 @@ def getIDS():
 
     ids_dirty = cleanhtml(str(res))
     dirty_list = convert_str(ids_dirty)
-    print(dirty_list)
+    # print(dirty_list)
     list_result = []
 
     for id_str in ids_dirty:
         for char in id_str:
             if char :
-            list_result.append(id_str)
+                list_result.append(id_str)
     return list_result
 
 
-print(getIDS())
+# print(getIDS())
 
 
 def getName(soup_res):
