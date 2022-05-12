@@ -1,11 +1,11 @@
 class Course:
-    def __init__(self, type, faculty, course_number, course_name, professor, exam_essay, exam_date, nakaz):
+    def __init__(self, type, faculty, course_number, course_name, professor, final, exam_date, nakaz):
         self.type = type
         self.faculty = faculty
         self.course_number = course_number
         self.course_name = course_name
         self.professor = professor
-        self.exam_essay = exam_essay
+        self.final = final
         self.exam_date = exam_date
         self.nakaz = nakaz
 
@@ -24,8 +24,8 @@ class Course:
     def getprofessor(self):
         return self.professor
 
-    def getexam_essay(self):
-        return self.exam_essay
+    def getfinal(self):
+        return self.final
 
     def getexam_date(self):
         return self.exam_date
