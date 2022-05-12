@@ -20,12 +20,14 @@ monday_client = MondayClient(apiKey)
 #     global my_board_id
 #     my_board_id = dict3.get('id')
 
-def errors_found(dict1):
-    r = dict1.get("error_message")
-    if r is not None:
-        print(r)
-        return False
-    return True
+def errors_found(nested_dict):
+    if 'errors' in nested_dict.keys():
+        print(nested_dict['errors'])
+        return True
+    if 'error_code' in nested_dict.keys():
+        print(nested_dict['error_code'])
+        return True
+    return False
 
 
 '''
@@ -35,13 +37,10 @@ Adds a new group to board and returns its id.
 
 
 def add_group_to_board(group_name):
-    new_group = monday_client.groups.create_group(my_board_id, group_name)
-    dict1 = dict(new_group)
-    if errors_found(dict1):
+    nested_dict = monday_client.groups.create_group(my_board_id, group_name)
+    if errors_found(nested_dict):
         return
-    dict2 = dict1.get('data')
-    dict3 = dict2.get('create_group')
-    new_group_id = dict3.get('id')
+    new_group_id = nested_dict['data']['create_group']['id']
     return new_group_id
 
 
@@ -51,23 +50,23 @@ Adds a new item to a specific group in the board and returns its id.
 :returns str item_id: the id of the new item'''
 
 
-def add_item_to_group(group_id, item_name, faculty, course_num, course_name, professor, final_assignment, final_date):
+def add_item_to_group(group_id, dic):
     col_val = {
-        "dropdown6": faculty,
-        "text_1": course_num,
-        "text_2": course_name,
-        "text3": professor,
-        "status5": final_assignment,
-        "date": final_date}
-    item = monday_client.items.create_item(board_id=my_board_id, group_id=group_id, item_name=item_name,
-                                           column_values=col_val,
-                                           create_labels_if_missing=True)
-    dict1 = dict(item)
-    if errors_found(dict1):
+        "dropdown6": 'faculty',
+        "text_2": dic['שם הקורס'],
+        "text3": 'professor',
+        "status5": 'final_assignment',
+    }
+    if 'מטלה סופית' not in dict(dic).keys():
+        col_val['date'] = '2000-01-01'
+    else:
+        col_val['date'] = dic['מטלות סופית']
+    nested_dict = monday_client.items.create_item(board_id=my_board_id, group_id=group_id, item_name=dic['מספר קורס'],
+                                                  column_values=col_val,
+                                                  create_labels_if_missing=True)
+    if errors_found(nested_dict):
         return
-    dict2 = dict1.get('data')
-    dict3 = dict2.get('create_item')
-    new_item_id = dict3.get('id')
+    new_item_id = nested_dict['data']['create_item']['id']
     return new_item_id
 
 
@@ -80,10 +79,9 @@ Updates the value of item with given id if exists
 
 
 def update_item(item_id, column_id, value):
-    out = monday_client.items.change_item_value(board_id=my_board_id, item_id=item_id, column_id=column_id, value=value)
-    dict1 = dict(out)
-    if errors_found(dict1):
-        return
+    nested_dict = monday_client.items.change_item_value(board_id=my_board_id, item_id=item_id, column_id=column_id,
+                                                        value=value)
+    errors_found(nested_dict)
 
 
 '''
@@ -93,11 +91,9 @@ deletes the group with given id if exists
 
 
 def delete_group(group_to_delete_id):
-    out = monday_client.groups.delete_group(board_id=my_board_id, group_id=group_to_delete_id)
-    dict1 = dict(out)
-    r = dict1.get("error_message")
-    if errors_found(dict1):
-        return
+    nested_dict = monday_client.groups.delete_group(board_id=my_board_id, group_id=group_to_delete_id)
+    errors_found(nested_dict)
+
 
 # Returns id of the first group with given name, if no such group exists, return none
 def get_group_id_by_name(group_name):
@@ -124,13 +120,13 @@ def get_group_id_by_name(group_name):
 
 def add_column(col_name, col_type):
     query = 'mutation{create_column(board_id: 2663503698, title:' + col_name + ', column_type:' + col_type + ') {id title description}}'
-    print(query)
     data = {'query': query}
     r = requests.post(url=apiUrl, json=data, headers=headers)
-    dict1 = dict(r)
-    if errors_found(dict1):
-        return
-    dict2 = dict1.get('data')
-    dict3 = dict2.get('create_column')
-    new_column_id = dict3.get('id')
-    return new_column_id
+    nested_dict = r.json()
+    new_col_id = nested_dict['data']['create_column']['id']
+    return new_col_id
+
+
+def delete_item(item_id):
+    nested_dict = monday_client.items.delete_item_by_id(item_id=item_id)
+    errors_found(nested_dict)
