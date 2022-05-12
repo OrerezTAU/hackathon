@@ -55,17 +55,7 @@ def getIDS():
 # print(getIDS())
 
 
-def getName(soup_res):
-    pass
-
-
-# for tag in soup.findAll('p'):
-#     print(tag.get_text())
-
-
-#cleantext = BeautifulSoup(res, "lxml").text
 
 
 
 
-# print(cleanhtml(table_res))
