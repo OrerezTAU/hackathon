@@ -1,5 +1,7 @@
 import requests
 from monday import MondayClient
+import extract_TAUfactor
+
 
 apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjE1OTY0Njg5NSwidWlkIjozMDE2NzQ2MywiaWFkIjoiMjAyMi0wNS0wOVQxODoyMTozMS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTE4NzU5MjIsInJnbiI6InVzZTEifQ.udfx4p8dqK-8wlbhOKRmHNp__YYuOMrVkI5ZWvOwqSo'
 headers = {"Authorization": apiKey}
@@ -154,6 +156,13 @@ def push_all_items(Courses_dict):
     for course in Courses_dict:
         group_id = group_create_helper(course=Courses_dict[course])
         add_item_to_group(group_id=group_id,dic=Courses_dict[course])
+
+
+    keys = dict(dict_av).keys()
+
+
+
+
 
 
 

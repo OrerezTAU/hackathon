@@ -68,6 +68,6 @@ def get_proff_name(dic,url):
 
 dic_course_data={}
 # get_course_name(dic_course_data)
-print(get_proff_name(dic_course_data, "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course=0609120001&year=2021"))
+#print(get_proff_name(dic_course_data, "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course=0609120001&year=2021"))
 # print(get_course_data(dic_course_data))
 # print(dic_course_data)
