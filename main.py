@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 import readData
+>>>>>>> 58bf511679053ac3c2278107e4000693cfde021e
 import UpdateToMonday as monday_update
 
 if __name__ == '__main__':
@@ -13,8 +17,33 @@ if __name__ == '__main__':
 
     # group_id = get_group_id_by_name("Exact Sciences Courses")
     #monday_update.add_item_to_group(monday_update.get_group_id_by_name('Exact Sciences Courses'),'0368-4086-01','מדעי המחשב', '0368-4086-01', 'נושאים מתקדמים בלמידה חישובית ואופטימיזציה','דר תומר קורן','אחר')
+<<<<<<< HEAD
+    monday_update.add_item_to_group(group_id=monday_update.get_group_id_by_name("Exact Sciences Courses"),dic=dict)
+=======
+import json
+
+file_name = "courses.json"
+file_dict = json.loads(file_name)
+for course in file_dict:
+    course_type = course["type"]
+    faculty = course["faculty"]
+    course_num = course["course_number"]
+    course_name = course["course_name"]
+    proff = course["professor"]
+    exam_essay = course["exam_essay"]
+    exam_date = course["exam_date"]
+    nakaz = course["nakaz"]
+    Course = course(course_type,faculty,course_num,course_name,proff,exam_essay,exam_date,nakaz)
+
+
+
+
+
+>>>>>>> nadav
+=======
     dict = readData.get_courses_dict()
     monday_update.push_all_items(dict)
 
+>>>>>>> 58bf511679053ac3c2278107e4000693cfde021e
 
 
