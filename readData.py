@@ -90,7 +90,7 @@ def getAllIds(Ulist):
     return all_ids
 
 
-def main():
+def get_courses_dict():
     dic_course_data={}
 
     g_list = getAllIds(URL_list)
@@ -115,7 +115,7 @@ def main():
                 dic_course_data[g_list[i][j]] = tmp_dic
 
                 continue
-    print(dic_course_data)
+    return dic_course_data
     #     req = requests.get(createURL(g_list[0][i]), headers=headers)
     #
     #     soup = BeautifulSoup(req.content, "html.parser")
