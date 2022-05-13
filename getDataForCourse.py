@@ -1,10 +1,24 @@
-import monday
-from monday import MondayClient
+
 import requests
 from bs4 import BeautifulSoup
 import re
-from readData import cleanhtml
-import readData
+
+
+def cleanhtml(text):
+    text = str(text)
+    new_str = ""
+    flag = False
+    for char in text:
+        if char == '<' or char == '\n':
+            flag = True
+            continue
+        if char == '>':
+            flag = False
+            # new_str += "\n"
+            continue
+        if not flag:
+            new_str += char
+    return new_str
 
 
 def get_all_div(url):
