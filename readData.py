@@ -90,6 +90,18 @@ def getAllIds(Ulist):
     return all_ids
 
 
+def nadavList(lipi):
+    nels = []
+    for sub in lipi:
+        for j in sub:
+            nels.append(str(j))
+    return nels
+
+
+def nadavwrap():
+    return nadavList(getAllIds(URL_list))
+
+
 def get_courses_dict():
     dic_course_data={}
 
