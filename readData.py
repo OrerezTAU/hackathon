@@ -3,6 +3,7 @@ from monday import MondayClient
 import requests
 from bs4 import BeautifulSoup
 import re
+import Course
 
 import getDataForCourse
 import getDataForCourse
@@ -92,15 +93,23 @@ def main():
     for i in range(len(g_list)):
         for j in range(len(g_list[i])):
             url_of_course = (createURL(g_list[i][j]))
-            if url_of_course != '1':
+            tmp_dic = {}
+            if url_of_course != '1' and url_of_course != "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course=0368331101&year=2021":
                 print(url_of_course)
                 try:
-                    getDataForCourse.get_course_name(dic_course_data, url_of_course)
-                    getDataForCourse.get_course_data(dic_course_data, url_of_course)
-                    getDataForCourse.get_proff_name(dic_course_data, url_of_course)
+                    getDataForCourse.get_course_name(tmp_dic, url_of_course)
+                    getDataForCourse.get_course_data(tmp_dic, url_of_course)
+                    getDataForCourse.get_proff_name(tmp_dic, url_of_course)
                 except:
-                    print(url_of_course )
                     continue
+                    # new_url = url_of_course[:78]
+                    # new_url += "2020"
+                    # getDataForCourse.get_course_name(dic_course_data, new_url)
+                    # getDataForCourse.get_course_data(dic_course_data, new_url)
+                    # getDataForCourse.get_proff_name(dic_course_data, new_url)
+                dic_course_data[g_list[i][j]] = tmp_dic
+
+                continue
     print(dic_course_data)
     #     req = requests.get(createURL(g_list[0][i]), headers=headers)
     #

@@ -1,5 +1,5 @@
 class Course:
-    def __init__(self, type, faculty, course_number, course_name, professor, final, exam_date, nakaz):
+    def __init__(self, type="", faculty="", course_number="", course_name="", professor="", final="", exam_date="", nakaz=""):
         self.type = type
         self.faculty = faculty
         self.course_number = course_number
@@ -32,3 +32,27 @@ class Course:
 
     def getnakaz(self):
         return self.nakaz
+
+    def settype(self, val):
+        self.type = val
+
+    def setfaculty(self, val):
+        self.faculty = val
+
+    def setcourse_number(self, val):
+        self.course_number = val
+
+    def setcourse_name(self, val):
+        self.course_name = val
+
+    def setprofessor(self, val):
+        self.professor = val
+
+    def setfinal(self, val):
+        self.final = val
+
+    def setexam_date(self, val):
+        self.exam_date = val
+
+    def setnakaz(self, val):
+        self.nakaz = val
