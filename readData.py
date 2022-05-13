@@ -1,5 +1,4 @@
-import monday
-from monday import MondayClient
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -88,6 +87,19 @@ def getAllIds(Ulist):
         if URL != '1':
             all_ids.append(getIDS(URL))
     return all_ids
+
+
+def nadavList(lipi):
+    nels = []
+    for sub in lipi:
+        for j in sub:
+            if len(str(j)) == 7:
+                nels.append("0"+str(j))
+    return nels
+
+
+def nadavwrap():
+    return nadavList(getAllIds(URL_list))
 
 
 def get_courses_dict():
