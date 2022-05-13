@@ -56,6 +56,7 @@ def add_item_to_group(group_id, dic):
         "dropdown6": dic[faculty],
         "text_2": dic[course_name],
         "text3": dic[professor],
+        "average58": dic['Average']
     }
 
     nested_dict = monday_client.items.create_item(board_id=my_board_id, group_id=group_id, item_name=dic[course_number],
@@ -153,12 +154,16 @@ def group_create_helper(course):
     return group_id
 
 def push_all_items(Courses_dict):
+    dict_avg = extract_TAUfactor.return_dict()
     for course in Courses_dict:
+        tempstr = str(course)
+        tempstr = "0"+tempstr[:3]+"-"+tempstr[3:]
+        Courses_dict[course]['Average'] = str(dict_avg[tempstr])
         group_id = group_create_helper(course=Courses_dict[course])
         add_item_to_group(group_id=group_id,dic=Courses_dict[course])
 
 
-    keys = dict(dict_av).keys()
+
 
 
 

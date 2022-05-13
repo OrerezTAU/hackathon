@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # group_id = get_group_id_by_name("Exact Sciences Courses")
     #monday_update.add_item_to_group(monday_update.get_group_id_by_name('Exact Sciences Courses'),'0368-4086-01','מדעי המחשב', '0368-4086-01', 'נושאים מתקדמים בלמידה חישובית ואופטימיזציה','דר תומר קורן','אחר')
 
-    dict_av = extract_TAUfactor.return_dict()
+
     dict = readData.get_courses_dict()
     monday_update.push_all_items(dict)
 
@@ -36,6 +36,5 @@ if __name__ == '__main__':
 
 
 
-e
 
 

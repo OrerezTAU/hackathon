@@ -18,8 +18,8 @@ def return_dict():
     for course in course_dict.keys():
         if course[1] == '3':
             URL += str(course)
-            response = urllib.request.urlopen(URL)
             try:
+                response = urllib.request.urlopen(URL)
                 data = json.loads(response.read())
                 course_dict[course] = data["results"][0]["instances"][0]["statistics"]["mean"]
             except:
