@@ -3,7 +3,7 @@ from monday import MondayClient
 import requests
 from bs4 import BeautifulSoup
 import re
-import Course
+
 
 import getDataForCourse
 import getDataForCourse

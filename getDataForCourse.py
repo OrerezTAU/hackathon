@@ -1,10 +1,26 @@
-import monday
-from monday import MondayClient
 import requests
 from bs4 import BeautifulSoup
-import re
-from readData import cleanhtml
-import readData
+#import readData
+# from readData import cleanhtml
+
+
+
+
+def cleanhtml(text):
+    text = str(text)
+    new_str = ""
+    flag = False
+    for char in text:
+        if char == '<' or char == '\n':
+            flag = True
+            continue
+        if char == '>':
+            flag = False
+            # new_str += "\n"
+            continue
+        if not flag:
+            new_str += char
+    return new_str
 
 
 def get_all_div(url):
@@ -22,16 +38,16 @@ def get_course_name(dic, url):
     get_name = get_all_div(url).find("div", {"class": "data-table-row course-name-number"})
     get_all_param = (get_name.findAll("div", {"class": "data-table-cell"}))
     for i in range(len(get_all_param)):
-        val = (readData.cleanhtml(get_all_param[i].find("small", {"class": "data-table-cell-label"})))
-        type = readData.cleanhtml(get_all_param[i].find("span"))
+        val = (cleanhtml(get_all_param[i].find("small", {"class": "data-table-cell-label"})))
+        type = cleanhtml(get_all_param[i].find("span"))
         dic[val] = type
 
 def get_course_data(dic, url):
     get_course_time_location = get_all_div(url).find("div", {"class": "data-table-row course-time-location"})
     get_all_param = (get_course_time_location.findAll("div", {"class": "data-table-cell"}))
     for i in range(len(get_all_param)):
-        val = (readData.cleanhtml(get_all_param[i].find("small", {"class": "data-table-cell-label"})))
-        type = readData.cleanhtml(get_all_param[i].find("span"))
+        val = (cleanhtml(get_all_param[i].find("small", {"class": "data-table-cell-label"})))
+        type = cleanhtml(get_all_param[i].find("span"))
         dic[val] = type
 
 

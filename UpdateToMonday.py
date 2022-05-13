@@ -1,7 +1,4 @@
-import monday.query_joins
 import requests
-import json
-
 from monday import MondayClient
 
 apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjE1OTY0Njg5NSwidWlkIjozMDE2NzQ2MywiaWFkIjoiMjAyMi0wNS0wOVQxODoyMTozMS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTE4NzU5MjIsInJnbiI6InVzZTEifQ.udfx4p8dqK-8wlbhOKRmHNp__YYuOMrVkI5ZWvOwqSo'
@@ -10,15 +7,6 @@ my_board_id = 2663503698
 apiUrl = "https://api.monday.com/v2"
 monday_client = MondayClient(apiKey)
 
-
-# def initiate_board_id():
-#     board = monday_client.boards.fetch_boards()
-#     dict1 = dict(board)
-#     dict2 = dict1.get('data')
-#     lst = dict2.get('boards')
-#     dict3 = lst[0]
-#     global my_board_id
-#     my_board_id = dict3.get('id')
 
 def errors_found(nested_dict):
     if 'errors' in nested_dict.keys():
@@ -51,17 +39,24 @@ Adds a new item to a specific group in the board and returns its id.
 
 
 def add_item_to_group(group_id, dic):
-    col_val = {
-        "dropdown6": 'faculty',
-        "text_2": dic['שם הקורס'],
-        "text3": 'professor',
-        "status5": 'final_assignment',
-    }
-    if 'מטלה סופית' not in dict(dic).keys():
-        col_val['date'] = '2000-01-01'
+    if 'יחידה אקדמית' in dic:
+        faculty = 'יחידה אקדמית'
+        course_name = 'שם הקורס'
+        course_number = 'מספר קורס'
+        professor = 'מרצה'
+
     else:
-        col_val['date'] = dic['מטלות סופית']
-    nested_dict = monday_client.items.create_item(board_id=my_board_id, group_id=group_id, item_name=dic['מספר קורס'],
+        faculty = 'Academic Unit'
+        course_name = 'Course Name'
+        course_number = 'Course Number'
+        professor = 'Lecturer'
+    col_val = {
+        "dropdown6": dic[faculty],
+        "text_2": dic[course_name],
+        "text3": dic[professor],
+    }
+
+    nested_dict = monday_client.items.create_item(board_id=my_board_id, group_id=group_id, item_name=dic[course_number],
                                                   column_values=col_val,
                                                   create_labels_if_missing=True)
     if errors_found(nested_dict):
@@ -130,3 +125,36 @@ def add_column(col_name, col_type):
 def delete_item(item_id):
     nested_dict = monday_client.items.delete_item_by_id(item_id=item_id)
     errors_found(nested_dict)
+
+def group_create_helper(course):
+    if 'יחידה אקדמית' in course:
+        faculty = 'יחידה אקדמית'
+        exact = 'מדויקים'
+        engineering = 'הנדסה'
+        life = 'חיים'
+        medicine = 'רפואה'
+    else:
+        faculty = 'Academic Unit'
+        exact = 'Exact'
+        engineering = 'Engineering'
+        life = 'Life'
+        medicine = 'Medicine'
+    if str(course[faculty]).find(exact) != -1 or str([faculty]).find(engineering) != -1 or str(
+            [faculty]).find(life) != -1 or str([faculty]).find(medicine) != -1:
+        group_id = get_group_id_by_name('East Side (Exact) courses')
+        if group_id is None:
+            group_id = add_group_to_board('East Side (Exact) courses')
+    else:
+        group_id = get_group_id_by_name('West Side (Humane) courses')
+        if group_id is None:
+            group_id = add_group_to_board('West Side (Humane) courses')
+    return group_id
+
+def push_all_items(Courses_dict):
+    for course in Courses_dict:
+        group_id = group_create_helper(course=Courses_dict[course])
+        add_item_to_group(group_id=group_id,dic=Courses_dict[course])
+
+
+
+
