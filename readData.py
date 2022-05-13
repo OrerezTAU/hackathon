@@ -1,5 +1,4 @@
-import monday
-from monday import MondayClient
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -94,7 +93,8 @@ def nadavList(lipi):
     nels = []
     for sub in lipi:
         for j in sub:
-            nels.append(str(j))
+            if len(str(j)) == 7:
+                nels.append("0"+str(j))
     return nels
 
 
