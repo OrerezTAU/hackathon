@@ -93,7 +93,8 @@ def nadavList(lipi):
     nels = []
     for sub in lipi:
         for j in sub:
-            nels.append(str(j))
+            if len(str(j)) == 7:
+                nels.append("0"+str(j))
     return nels
 
 
