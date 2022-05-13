@@ -15,7 +15,12 @@ headers = {
 
 URL_list =[("https://exact-sciences.tau.ac.il/yedion/shar_ruach", "node-12227"), \
            ("https://exact-sciences.tau.ac.il/yedion/computer_courses", "node-12150"), \
-           ("https://exact-sciences.tau.ac.il/yedion/math_single_major", "node-12020")]
+           ("https://engineering.tau.ac.il/yedion/2020-21/9_7441", "node-7441"), \
+           ("https://lifesci.tau.ac.il/yedion/ba-courses-list", "node-4621"), \
+           ("https://social-sciences.tau.ac.il/yedion/2020-21/klalfaculty", "node-9045")]
+
+
+#("https://exact-sciences.tau.ac.il/yedion/math_single_major", "node-12020")
 
 
 def convert_str(string):
@@ -95,7 +100,7 @@ def main():
             url_of_course = (createURL(g_list[i][j]))
             tmp_dic = {}
             if url_of_course != '1' and url_of_course != "https://www.ims.tau.ac.il/Tal/Syllabus/Syllabus_L.aspx?course=0368331101&year=2021":
-                print(url_of_course)
+
                 try:
                     getDataForCourse.get_course_name(tmp_dic, url_of_course)
                     getDataForCourse.get_course_data(tmp_dic, url_of_course)
