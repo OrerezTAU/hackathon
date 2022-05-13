@@ -139,8 +139,8 @@ def group_create_helper(course):
         engineering = 'Engineering'
         life = 'Life'
         medicine = 'Medicine'
-    if str(course[faculty]).find(exact) != -1 or str([faculty]).find(engineering) != -1 or str(
-            [faculty]).find(life) != -1 or str([faculty]).find(medicine) != -1:
+    if str(course[faculty]).find(exact) != -1 or str(course[faculty]).find(engineering) != -1 or str(
+            course[faculty]).find(life) != -1 or str(course[faculty]).find(medicine) != -1:
         group_id = get_group_id_by_name('East Side (Exact) courses')
         if group_id is None:
             group_id = add_group_to_board('East Side (Exact) courses')
